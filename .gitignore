@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.py[cod]
+*.iml
+.directory
+.idea
+venv/
+__
