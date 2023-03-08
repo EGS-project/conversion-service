@@ -29,4 +29,3 @@ if __name__ == '__main__':
         ssl_active=config.RABBIT_MQ_SSL
         )
     Receiver().start_processing(exchange_name=config.RABBIT_MQ_EXCHANGE_NAME, queue_name=config.RABBIT_MQ_QUEUE_NAME)
-    

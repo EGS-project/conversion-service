@@ -7,18 +7,21 @@ import logging
 from src.kombu.worker import Worker
 from src.kombu.kombu_connection import KombuConnection
 import src.config as config
+from kombu.message import Message
+import pickle
 
 logging.basicConfig(level=logging.INFO)
 
 class Sender:
     def publish_test_msg(self):
         message = json.dumps({
-            'camera_id': 'AAAAAAAAA',
-            'frame_timestamp': 'frame_timestamp',
-            'trigger_timestamp': '12412412'
+            'source': 'sender blabla',
+            'xyz': 1231231,
+            '123': 41221312
         })
-        message = 'TEST'
-        logging.info(f'Message sent: {message}')
+           
+        
+        logging.info(f'Message sent: {message.__str__()}')
         
         producer = KombuConnection.get_producer(config.RABBIT_MQ_EXCHANGE_NAME, config.RABBIT_MQ_QUEUE_NAME)
         producer.publish(message, content_type='application/json')
