@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  # broker:
+  #   container_name: mqtt
+  #   image: eclipse-mosquitto:2.0.15
+  #   ports:
+  #     - '1883:1883'
+  #   volumes:
+  #     - './mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf'
+  #   environment:
+  #     - RABBIT_MQ_USERNAME=${MOSQUITTO_USERNAME}
+  #     - RABBIT_MQ_USERNAME=${MOSQUITTO_PASSWORD}
+  #   restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ./docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ./docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      
