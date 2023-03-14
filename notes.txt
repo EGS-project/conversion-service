@@ -1,0 +1,1 @@
+serializing and deserializing- create class to interpret image pre and post sending
