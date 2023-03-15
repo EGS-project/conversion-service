@@ -34,7 +34,7 @@ class ImageListener(object):
 
     def on_message(self, message):
         print("on message called")
-        image_data = parse_message(message)
+        image_data= parse_message(message)
         image = Image.open(io.BytesIO(image_data))
         image.show()
         print("parsed and printed message")

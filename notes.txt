@@ -1,1 +1,21 @@
 serializing and deserializing- create class to interpret image pre and post sending
+
+possible content needed for image manipulation:
+optimize flag
+new resolution values: width and height
+flag for AA usage
+quality in %
+
+
+
+
+
+3.87MB 
+2339x1255
+testing02
+
+
+
+2.20MB
+25000x15451
+elephant
