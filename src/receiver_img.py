@@ -9,10 +9,8 @@ import base64
 
 
 def parse_message(message):
-    print("parse_message called")
     root = ET.fromstring(message.body)
 
-    print("getting  xml elements")
     filename = root.find("filename").text
     b64_data = root.find("b64_string").text
     width =root.find("width").text
@@ -24,7 +22,6 @@ def parse_message(message):
     image_data = base64.b64decode(b64_data.encode('utf-8'))
     #image = Image.frombytes(mode,(width,height),image_data)
 
-    print("decoded image data and returning")
     return image_data
 
 
@@ -33,11 +30,9 @@ class ImageListener(object):
         super().__init__()
 
     def on_message(self, message):
-        print("on message called")
         image_data= parse_message(message)
         image = Image.open(io.BytesIO(image_data))
         image.show()
-        print("parsed and printed message")
 
 class Transport(object):
     def __init__(self, conn):
@@ -55,7 +50,7 @@ conn.connect('admin', 'admin', wait=True)
 
 
 conn.subscribe(destination='queue/test_img', id=1, ack='auto')
-print("suubscribed")
+print("subscribed")
 while True:
     pass
 conn.disconnect()

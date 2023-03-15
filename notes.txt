@@ -6,16 +6,9 @@ new resolution values: width and height
 flag for AA usage
 quality in %
 
+conversion service input comes from a message:
 
+in order to create the Image object on the receiver side, only the base64 image data is required, file name and metadata is optional
+meaning any service that handles the reception of images only needs to MANDATORILY retrieve the image data and nothing else
 
-
-
-3.87MB 
-2339x1255
-testing02
-
-
-
-2.20MB
-25000x15451
-elephant
+meaning that the b64_string field is the only one that will not have a default value
