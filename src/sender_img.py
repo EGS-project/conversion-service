@@ -7,17 +7,12 @@ import base64
 import xml.etree.ElementTree as ET
 
 
-def prepare_message(filename, image):  # "XML encoder" - incorrect naming but used for now
+def prepare_message(filename, image):  # use MIME for image messaging, MIME object goes inside XML message
 
     with open(filename, 'rb') as f:
         image_data = f.read()
 
     img_b64data = base64.b64encode(image_data).decode('utf-8')
-
-    print(image.size[0])
-    print(image.size[1])
-    print(image.mode)
-    print(image.format)
 
     root = ET.Element("image")
 
@@ -57,13 +52,12 @@ conn.set_listener('', MyListener())
 conn.connect('admin', 'admin', wait=True)
 queue_name = '/queue/test_img'
 
-filename = '/home/alvaro/Desktop/Universidade/2ndSemestre/EGS/conversion-service/composetest/anemone.png'
+filename = '/home/alvaro/Desktop/Universidade/2ndSemestre/EGS/conversion-service/data/anemone.png'
 img = Image.open(filename)
 xml_string = prepare_message(filename, img)
 
 try:
-    conn.send(body=xml_string, destination='queue/test_img',
-              headers={'filename': 'anemone.png'})
+    conn.send(body=xml_string, destination='queue/test_img', headers={'filename': 'anemone.png'}) #mexer nos headers, ver o que e que isto e
 except KeyboardInterrupt:
     print('\nStopping...')
 finally:

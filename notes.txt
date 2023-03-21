@@ -12,3 +12,7 @@ in order to create the Image object on the receiver side, only the base64 image 
 meaning any service that handles the reception of images only needs to MANDATORILY retrieve the image data and nothing else
 
 meaning that the b64_string field is the only one that will not have a default value
+maybe implementing a flag that specifies if any manipulation is to be made regarding the resolution, compression, aliasing
+    this would allow for theoretically simpler decisions regarding the processing of an xml message
+
+stomp queue connection functions need to be studied - IMPORTANT
