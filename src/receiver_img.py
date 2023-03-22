@@ -1,67 +1,40 @@
-import stomp
 from PIL import Image
-import io
-import subprocess
+import stomp
+from src.message.utils import parse_message
+import src.config as config
 import time
-import os
-import xml.etree.ElementTree as ET
-import base64
 
+from src.activemq.factory import ActiveMqConnectionFactory
+from src.activemq.worker import ActiveMqWorker
+from src.activemq.utils import SubIdGenerator
+import stomp.connect as connect
 
-def parse_message(message):
-    root = ET.fromstring(message.body)
+import logging
+logging.basicConfig(level=logging.INFO)
 
-    filename = root.find("filename").text
-    b64_data = root.find("b64_string").text
-    width =root.find("width").text
-    height =root.find("height").text
-    mode =root.find("mode").text
-    format =root.find("format").text
-
-
-    image_data = base64.b64decode(b64_data.encode('utf-8'))
-    #image = Image.frombytes(mode,(width,height),image_data)
-
-    return image_data
-
-
-class ImageListener(object):
+class ImageListener(stomp.ConnectionListener):
     def __init__(self):
         super().__init__()
-
+        
     def on_message(self, message):
         image_data= parse_message(message)
+        import io
         image = Image.open(io.BytesIO(image_data))
         image.show()
+        
 
-class Transport(object):
-    def __init__(self, conn):
-        self.conn = conn
+conn: connect.StompConnection11 = ActiveMqConnectionFactory.create_connection(
+    broker_host=config.ACTIVEMQ_HOST,
+    broker_port=config.ACTIVEMQ_PORT,
+    broker_username=config.ACTIVEMQ_USERNAME,
+    broker_password=config.ACTIVEMQ_PASSWORD,
+    listener=ImageListener()
+)
 
-    def notify(self, frame):
-        if self.listener is not None:
-            self.listener.on_message(frame.headers, frame.body)
-
-
-conn = stomp.Connection([('localhost', 61613)])
-conn.set_listener('', ImageListener())
-
-conn.connect('admin', 'admin', wait=True)
-
-
-conn.subscribe(destination='queue/test_img', id=1, ack='auto')
-print("subscribed")
-while True:
-    pass
-conn.disconnect()
-
-def on_message(self, headers, message):
-    print('received a message "%s"' % message)
-    # Extract base64 encoded image data from message
-    img_b64data = message
-
-    # Decode base64 string to get back original binary image data
-    image_data = base64.b64decode(img_b64data.encode('utf-8'))
-    
-    # Process image_data as needed
-    # ...
+worker: ActiveMqWorker = ActiveMqWorker(
+    connection=conn,
+    sub_id=SubIdGenerator.generate_next(),
+    queue=config.ACTIVEMQ_CONVERT_IMAGE_QUEUE
+)
+logging.info("subscribed")
+worker.loop()
