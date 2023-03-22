@@ -2,14 +2,13 @@ version: '3.9'
 
 services:
   activemq:
-    image: rmohr/activemq
+    image: rmohr/activemq:5.15.9
     container_name: activemq
     ports:
       - "8161:8161"
       - "61616:61616"
       - "61613:61613"
-    env_file: ./.env
     environment:
-      ACTIVEMQ_ADMIN_LOGIN: ${ACTIVEMQ_ADMIN_LOGIN}
-      ACTIVEMQ_ADMIN_PASSWORD: ${ACTIVEMQ_ADMIN_PASSWORD}
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
     
