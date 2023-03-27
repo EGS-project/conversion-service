@@ -1,7 +1,5 @@
 import stomp
-import src.config as config
 import stomp.connect as connect
-
 
 class ActiveMqConnectionFactory:
     

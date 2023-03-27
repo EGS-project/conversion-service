@@ -23,4 +23,4 @@ class ActiveMqWorker:
     def loop(self) -> None:
         while self.conn.is_connected():
             time.sleep(.5)
-        
+    
