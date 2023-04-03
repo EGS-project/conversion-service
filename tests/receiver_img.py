@@ -5,7 +5,7 @@ from src.activemq.factory import ActiveMqConnectionFactory
 from src.activemq.worker import ActiveMqWorker
 from src.activemq.utils import SubIdGenerator
 import stomp.connect as connect
-from service import ConversionsListener
+from src.service import ConversionsListener
 import logging
 logging.basicConfig(level=logging.INFO)
 

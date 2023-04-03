@@ -1,7 +1,7 @@
 from PIL import Image
 import stomp
 
-from message.utils import parse_message
+from src.message.utils import parse_message
 
 
 class ConversionsListener(stomp.ConnectionListener):
