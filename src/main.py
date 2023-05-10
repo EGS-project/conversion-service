@@ -9,7 +9,7 @@ from src.conversion.dependencies import convert_image_listener
 import src.config as config
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 
 def main():
