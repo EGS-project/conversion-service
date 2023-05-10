@@ -1,8 +1,11 @@
+import logging
+from io import BytesIO
+
 import stomp
 import stomp.utils
-import logging
-from src.conversion.message import ConvertImageMsg, ConvertImageReplyMsg
+from PIL import Image
 from src.activemq.dispatcher import ActivemqDispatcher
+from src.conversion.message import ConvertImageMsg, ConvertImageReplyMsg
 
 
 class ConvertImageListener(stomp.ConnectionListener):
@@ -12,12 +15,12 @@ class ConvertImageListener(stomp.ConnectionListener):
     def on_message(self, frame: stomp.utils.Frame):
         msg = ConvertImageMsg()
         msg.deserialize(frame=frame)
-        # for debug
-        # with open('sample_images/reply.png', 'wb') as f:
-        #     f.write(msg.image_data)
+        # local debug
+        # image = Image.open(BytesIO(msg.image_data))
+        # image.show()
         
-        # convert the image
-        converted_image_data = ...
+        # convert the image # TODO CONVERSION
+        converted_image_data = msg.image_data
         
         # reply
         self.dispatcher.send_convert_image_reply_message(

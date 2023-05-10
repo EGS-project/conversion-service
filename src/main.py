@@ -7,6 +7,7 @@ from src.activemq.manager import ActivemqWorkerManager
 from src.activemq.worker import ActiveMqWorker
 from src.conversion.dependencies import convert_image_listener
 import src.config as config
+import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -26,7 +27,9 @@ def main():
     # loop indefinitely
     while True:
         try: time.sleep(.05)
-        except KeyboardInterrupt: break
+        except KeyboardInterrupt as e:
+            logging.info(e)
+            break
     awm.stop_threadpool()
 
 if __name__ == '__main__':
