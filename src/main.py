@@ -1,16 +1,33 @@
-import config
 import logging
+import time
+
+from src.activemq.utils import SubIdGenerator
+from src.activemq.dependencies import ActiveMqConnectionFactory
+from src.activemq.manager import ActivemqWorkerManager
+from src.activemq.worker import ActiveMqWorker
+from src.conversion.dependencies import convert_image_listener
+import src.config as config
 
 logging.basicConfig(level=logging.DEBUG)
 
 
 def main():
-    logging.info('Now I can access the variables from the app\'s code!')
-    logging.info(
-        f'''
-        ACTIVEMQ_HOST -> {config.ACTIVEMQ_HOST},
-        ACTIVEMQ_PORT -> {config.ACTIVEMQ_PORT},
-        ''')
+    awm : ActivemqWorkerManager = ActivemqWorkerManager(workers=[
+        ActiveMqWorker(
+            connection=ActiveMqConnectionFactory.create_connection(
+                listener=convert_image_listener
+                ),
+            sub_id=SubIdGenerator.generate_next(),
+            queue=config.ACTIVEMQ_CONVERT_IMAGE_QUEUE
+        ),
+        ])
+    awm.submit_threadpool()
+    
+    # loop indefinitely
+    while True:
+        try: time.sleep(.05)
+        except KeyboardInterrupt: break
+    awm.stop_threadpool()
 
 if __name__ == '__main__':
     main()

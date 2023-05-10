@@ -8,3 +8,4 @@ venv/
 __
 notes.txt
 certs/
+**_cache**
