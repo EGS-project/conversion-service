@@ -2,7 +2,7 @@ from PIL import Image, UnidentifiedImageError
 import io
 
 class Converter:
-    supported_formats = ['PNG', 'JPEG']
+    supported_formats = ['JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP', 'PPM']
 
     @classmethod
     def convert(cls, data: bytes, format: str) -> bytes:
