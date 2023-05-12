@@ -16,7 +16,7 @@ send_conn = ActiveMqConnectionFactory.create_connection(
 
 activemq_dispatcher = TestingDispatcher(conn=send_conn)
 
-img = Image.open('sample_images/test.png')
+img = Image.open('sample_images/anemone.png')
 byte_stream = io.BytesIO()
 img.save(byte_stream, format='PNG')
 
