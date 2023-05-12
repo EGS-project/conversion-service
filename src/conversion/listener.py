@@ -20,9 +20,7 @@ class ConvertImageListener(stomp.ConnectionListener):
         # image = Image.open(BytesIO(msg.image_data))
         # image.show()
         
-        # convert the image # TODO CONVERSION
-        print(msg.image_data)
-        print(msg.image_format)
+        # convert the image
         converted_image_data = Converter.convert(msg.image_data, msg.image_format)
         
         # reply

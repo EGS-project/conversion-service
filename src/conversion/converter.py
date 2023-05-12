@@ -16,7 +16,6 @@ class Converter:
             return None
 
         buffer = io.BytesIO()
-        print(img.mode)
         if img.mode != 'RGB':
             if format == 'JPEG' or format == 'BMP' or format == 'TIFF':
                 img = img.convert('RGB')

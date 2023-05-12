@@ -46,7 +46,8 @@ class ConvertImageReplyMsg():
         
     def serialize(self):
         mime_multipart = MIMEMultipart()
-        part = MIMEImage(self.image_data)
-        part.add_header('Content-ID', 'data')
-        mime_multipart.attach(part)
+        if self.image_data:
+            part = MIMEImage(self.image_data)
+            part.add_header('Content-ID', 'data')
+            mime_multipart.attach(part)
         return mime_multipart.as_string()
