@@ -16,16 +16,6 @@ class ConvertImageMsg():
         self.image_format = image_format
         self.correlation_id: str = None
 
-    def serialize(self):
-        mime_multipart = MIMEMultipart()
-        part = MIMEImage(self.image_data)
-        part.add_header('Content-ID', 'data')
-        mime_multipart.attach(part)
-        part = MIMEText(self.image_format)
-        part.add_header('Content-ID', 'image_format')
-        mime_multipart.attach(part)
-        return mime_multipart.as_string()
-
     def deserialize(self, frame: stomp.utils.Frame) -> None:
         mime_message: MIMEMessage = email.message_from_string(frame.body)
         for part in mime_message.walk():
