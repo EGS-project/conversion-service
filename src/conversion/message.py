@@ -22,7 +22,7 @@ class ConvertImageMsg():
             if part.get('Content-ID') == 'data':
                 self.image_data = part.get_payload(decode=True)
             elif part.get('Content-ID') == 'image_format':
-                self.image_format = part.get_payload(decode=True)
+                self.image_format = part.get_payload(decode=False)
         self.correlation_id = frame.headers.get('correlation_id')
 
 class ConvertImageReplyMsg():

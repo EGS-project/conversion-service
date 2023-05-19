@@ -1,5 +1,7 @@
+import logging
 from PIL import Image, UnidentifiedImageError
 import io
+import PIL.Image as Img
 
 class Converter:
     supported_formats = ['JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP', 'PPM']
@@ -19,6 +21,7 @@ class Converter:
         if img.mode != 'RGB':
             if format == 'JPEG' or format == 'BMP' or format == 'TIFF':
                 img = img.convert('RGB')
+
         img.save(buffer, format=format)
         
         return buffer.getvalue()
