@@ -8,6 +8,7 @@ class Converter:
 
     @classmethod
     def convert(cls, data: bytes, format: str) -> bytes:
+        format = format.upper()
         if not data or format not in cls.supported_formats:
             return None
         
