@@ -7,7 +7,7 @@ clean:
 REGISTRY := registry.deti:5000
 NAMESPACE := egs-conv
 SERVICE := conversion-service
-VERSION := v1
+VERSION := latest
 
 build:
 	docker buildx build --platform linux/amd64 --network=host -t ${REGISTRY}/$(NAMESPACE)/$(SERVICE):$(VERSION) .

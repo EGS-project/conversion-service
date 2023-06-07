@@ -1,4 +1,4 @@
-import stomp.connect as connect
+import logging
 
 import src.config as config
 from src.conversion.message import *
@@ -8,6 +8,7 @@ class ActivemqDispatcher:
         self.conn = conn
         
     def send_convert_image_reply_message(self, msg: ConvertImageReplyMsg) -> None:
+        logging.info(msg)
         self.conn.send(
             destination=config.ACTIVEMQ_CONVERT_IMAGE_REPLY_QUEUE,
             body=msg.serialize(),

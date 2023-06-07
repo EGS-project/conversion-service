@@ -1,6 +1,8 @@
 import logging
-import stomp.connect as connect
 import time
+
+import stomp.connect as connect
+
 
 class ActiveMqWorker:
     def __init__(

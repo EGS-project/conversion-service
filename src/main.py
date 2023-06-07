@@ -1,18 +1,24 @@
-import logging
 import time
 
-from src.activemq.utils import SubIdGenerator
+import logging
+import src.config as config
 from src.activemq.dependencies import ActiveMqConnectionFactory
 from src.activemq.manager import ActivemqWorkerManager
+from src.activemq.utils import SubIdGenerator
 from src.activemq.worker import ActiveMqWorker
 from src.conversion.dependencies import convert_image_listener
-import src.config as config
-import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
-
+    
 def main():
+
+    logging.info('start')
+    
     awm : ActivemqWorkerManager = ActivemqWorkerManager(workers=[
         ActiveMqWorker(
             connection=ActiveMqConnectionFactory.create_connection(
@@ -33,4 +39,5 @@ def main():
     awm.stop_threadpool()
 
 if __name__ == '__main__':
+
     main()

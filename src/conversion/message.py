@@ -24,6 +24,13 @@ class ConvertImageMsg():
             elif part.get('Content-ID') == 'image_format':
                 self.image_format = part.get_payload(decode=False)
         self.correlation_id = frame.headers.get('correlation_id')
+        
+    def __str__(self):
+        return f'''ConvertImageMsg:
+        correlation_id: {self.correlation_id},
+        image_format: {self.image_format}
+        '''
+
 
 class ConvertImageReplyMsg():
     def __init__(
@@ -40,3 +47,7 @@ class ConvertImageReplyMsg():
         part.add_header('Content-ID', 'data')
         mime_multipart.attach(part)
         return mime_multipart.as_string()
+
+    def __str__(self):
+        return f'''ConvertImageReplyMsg:
+        correlation_id: {self.correlation_id}'''

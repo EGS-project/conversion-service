@@ -1,7 +1,9 @@
-import logging
-from PIL import Image, UnidentifiedImageError
 import io
+import logging
+
 import PIL.Image as Img
+from PIL import Image, UnidentifiedImageError
+
 
 class Converter:
     supported_formats = ['JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP', 'PPM']
